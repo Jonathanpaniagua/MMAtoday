@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+
+{% for messages in my_inbox %}
+<table class="table-hover" style="width:100%">
+    <tr>
+        <th>Subject</th>
+        <th>Sender</th>
+        <th>Date</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td><a href="/viewmessage/{{messages.id}}">{{messages.subject}}</a></td>
+        <td><a href="/viewuser/{{messages.sender.id}}">{{messages.sender.first_name}} {{messages.sender.last_name}}</a></td>
+        <td><a href="/viewmessage/{{messages.id}}">{{messages.created_at}}</a></td>
+        <td>
+            <a href="/viewmessage/{{messages.id}}">
+                <button class="btn btn-primary">View Message</button>
+            </a>
+            <a href="/deletemessage/{{messages.id}}">
+                <button class="btn btn-danger">Delete</button>
+            </a>
+        </td>
+    </tr>
+</table>
+{% endfor %}
+
+{% endblock %}

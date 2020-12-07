@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+
+<div class="trainh3">
+    <h3>Training Posts</h3>
+</div>
+
+{% for posts in training_feed %}
+<div class="card" style="width: 69.5rem;">
+    <div class="card-body">
+        <br>
+        <h4 class="card-title">{{posts.trainingpost}}</h4>
+        <p class='post'>Posted By: <a href="/viewuser/{{posts.poster.id}}">{{posts.poster.first_name}}
+                {{posts.poster.last_name}}</a></p>
+
+        {% if user == posts.poster %}
+        <form action="/deletepost/{{posts.id}}" method="POST">
+            {% csrf_token %}
+            <input class="btn btn-danger" type="submit" value="Delete Post">
+        </form>
+        {% endif %}
+        <br>
+        <form action="/postcomment/{{posts.id}}" method=POST>
+            {% csrf_token %}
+            <input type="text" name='comment'>
+            <input class="btn btn-primary" type="submit" value='Comment'>
+        </form>
+
+        <div class="card-body" style="width: 30rem;">
+            <div class="comment">
+                <br>
+                {% for comments in posts.post_comments.all %}
+                <h5 class="card-title">{{comments.comment}}</h5>
+                <p class="card-text">Commented By: <a href="/viewuser/{{comments.commenter.id}}">{{comments.commenter.first_name}}
+                        {{comments.commenter.last_name}}</a></p>
+
+                {% if user == comments.commenter %}
+                <form action="/deletecomment/{{comments.id}}" method="POST">
+                    {% csrf_token %}
+                    <input class="btn btn-danger" type="submit" value="Delete Comment">
+                </form>
+                {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+{% endfor %}
+
+    <br>
+
+<div class="card" style="width: 69.5rem;">
+
+    <div class='card-body'>
+        <h4 class="card-title">Create A Post</h4>
+        <form action="/createpost" method=POST>
+            {% csrf_token %}
+            <textarea type="text" name='trainpost' class="form-control" rows="2" id="message"></textarea>
+            <br>
+            <input class="btn btn-primary" type="submit" value="Post">
+            <br>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

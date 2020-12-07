@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+<div class="card" style="width: 30rem;">
+    <div class="card-body">
+        <h4 class="card-title">{{one_message.subject}}</h4>
+        <p class="card-text">{{one_message.message}}</p>
+        <p class="card-text">Sent By: {{one_message.sender.first_name}} {{one_message.sender.last_name}}</p>
+        <a href="/deletemessage/{{one_message.id}}">
+            <button class="btn btn-danger">Delete</button>
+        </a>
+    </div>
+</div>
+
+{% endblock %}

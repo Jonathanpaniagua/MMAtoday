@@ -1,0 +1,36 @@
+{% extends 'index.html' %}
+
+
+{% block content %}
+
+
+
+<div class="card" style="width: 25rem;">
+    {% load static %}
+    <img class="card-img-top" src="{% static 'media/profilepic.png' %}" alt="profile_image">
+    <div class="card-body">
+        <h5 class="card-title">{{user.first_name}} {{user.last_name}}</h5>
+        <p class="card-text">{{user.email}}</p>
+        <p class="card-text">{{user.user_gyms}}</p>
+    </div>
+</div>
+
+
+<br>
+
+<div class='card card-body'>
+    <form action="/createmessage/{{user.id}}" method=POST>
+        {% csrf_token %}
+        <h3>Send A Message</h3>
+        <br>
+        Subject: <input type="text" name='subject'>
+        <br>
+        <br>
+        <label for="message">Message:</label>
+        <textarea type="text" name="msg" class="form-control" rows="2" id="message"></textarea>
+        <br>
+        <input onclick="myFunction()" class="btn btn-success" type="submit" value='Send'>
+    </form>
+</div>
+
+{% endblock %}
